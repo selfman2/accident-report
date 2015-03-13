@@ -18,7 +18,7 @@ my_data$Year<-as.character(my_data$Year)
 
 library(forecast)
 mfit<-auto.arima(my_data$M.18.21)
-fcast<-forecast(mfit, h=5)
+fcast<-forecast(mfit, h=0)
 #fcast
 plot(fcast, main = "Number of Road Accidents in Germany", ylab = "Total # of Males (18-21ys)", xlab = "Year", xaxt="n", plot.conf="FALSE")
 my_years<-as.integer(my_data$Year)

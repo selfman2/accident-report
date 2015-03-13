@@ -10,21 +10,29 @@ library(shiny)
 shinyUI(fluidPage(
 
   # Application title
-  titlePanel("Old Faithful Geyser Data"),
+  titlePanel("Injured/Dead Persons (per year) due to Road Accidents in Germany"),
 
   # Sidebar with a slider input for number of bins
   sidebarLayout(
     sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
+      helpText("This app allows the user to visualize some aspects of the above mentioned scenario/data.", 
+                "One special option is to predict into the future, if wished.",
+                "Data source: ADAC Germany"), 
+      selectInput("agegroup", label = ("Pls select age group for display:"), 
+                   choices = list("under 18" = 1, "aged 18 to 21" = 2,
+                                  "all ages" = 3), selected = 2),
+      radioButtons("gender", label = ("Pls select male or female victims for display"),
+                   choices = list("Male" = 1, "Female" = 2), selected = 1),
+      checkboxInput("prediction", label = "Do you want 5-year prediction (instead of only 1 year)?", value = FALSE),
+      submitButton("Submit")
     ),
 
     # Show a plot of the generated distribution
     mainPanel(
-      plotOutput("distPlot")
+      textOutput("gender"),
+      textOutput("agegroup"),
+      textOutput("prediction"),
+      plotOutput("predPlot")
     )
   )
 ))
