@@ -1,0 +1,51 @@
+Forecasting of road accident responsibles (gender/age) in Germany
+========================================================
+author: Bernhard Thoni
+date: 15.03.2015
+
+
+Introduction, Dataset and Model
+========================================================
+
+- The data are official numbers from Germany's ADAC 
+   (automobile club)
+- Beginning with 2003, the data are complete (yearwise) till 2013
+   (before this date, some years are missing)
+- Here you can find the shiny-app developed for the course project:
+   https://selfman2.shinyapps.io/accident-report/
+- I use the forecast library for this project
+- The applied methodology is: arima
+
+
+Model of the Forecast
+========================================================
+
+```{r forecast_chunk, eval=TRUE}
+library(xlsx)
+my_cc<-c("character",rep("integer", 19))
+my_data <- read.xlsx("data/adac-unfallgeschehen.xlsx", "Page 13", startRow = 2, header = T, colIndex=c(1,2,3,4,5,6,7), colClasses = my_cc)
+#my_data$Year<-as.Date(my_data$Year,origin=0)
+my_data$Year<-as.character(my_data$Year)
+  
+library(forecast)
+mfit<-auto.arima(my_data$F.less18)
+fcast<-forecast(mfit, h=5)
+```
+
+
+Slide With Plot
+========================================================
+
+```{r plot_chunk, echo=FALSE}
+plot(fcast, main = "Number of Road Accidents in Germany", ylab = "Total # of Males", xlab = "Year", xaxt="n", plot.conf="FALSE")
+my_years<-as.integer(my_data$Year)
+axis(1,at=1:16,label=my_years,las=2)
+grid()
+```
+
+
+Conclusion
+========================================================
+
+Although forecasting in the future is dangerous, as it could result in numbers below zero, this application at least is able to demonstrate the tendency of the development (5ys into the future from 2013 onwards).
+
