@@ -19,7 +19,7 @@ shinyUI(fluidPage(
                 "One special option is to predict into the future, if wished.",
                 "Data source: ADAC Germany"), 
       selectInput("agegroup", label = ("Pls select age group for display:"), 
-                   choices = list("under 18" = 1, "aged 18 to 21" = 2,
+                   choices = list("under 18" = 1, "age 18 to 21" = 2,
                                   "all ages" = 3), selected = 2),
       radioButtons("gender", label = ("Pls select male or female victims for display"),
                    choices = list("Male" = 1, "Female" = 2), selected = 1),
@@ -29,9 +29,6 @@ shinyUI(fluidPage(
 
     # Show a plot of the generated distribution
     mainPanel(
-      textOutput("gender"),
-      textOutput("agegroup"),
-      textOutput("prediction"),
       plotOutput("predPlot")
     )
   )
